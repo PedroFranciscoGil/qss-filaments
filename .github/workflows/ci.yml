@@ -1,0 +1,45 @@
+name: tests
+
+on:
+  push:
+    branches: [main, "cleanup/**", "dev/**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  cpu-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    env:
+      JAX_PLATFORMS: cpu
+      JAX_ENABLE_X64: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install
+        # XCOIL_TOKEN (read access to XCoil) is only needed while XCoil is private; without it pip fetches XCoil
+        # anonymously.
+        env:
+          XCOIL_TOKEN: ${{ secrets.XCOIL_TOKEN }}
+        run: |
+          if [ -n "$XCOIL_TOKEN" ]; then
+            git config --global url."https://x-access-token:${XCOIL_TOKEN}@github.com/".insteadOf "https://github.com/"
+          fi
+          python -m pip install --upgrade pip
+          pip install -e ".[test]"
+      - name: Environment check
+        run: qss-check
+      - name: PHR self-test
+        run: python -m phrport.phr --self-test
+      - name: Unit and XCoil tests
+        run: pytest -q
+      - name: Tutorial 1 at tiny settings (end to end, coils included)
+        if: matrix.python-version == '3.12'
+        run: QSS_RUN_SLOW=1 pytest -q tests/test_tutorial1.py

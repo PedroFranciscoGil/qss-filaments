@@ -1,0 +1,40 @@
+# python
+__pycache__/
+*.py[cod]
+.pycache/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.venv*/
+venv/
+
+# run outputs (keep them out of the repository)
+runs/
+runs_*/
+scratch/
+.cache/
+*.nc
+*.h5
+*.npz
+*.npy
+*.vtk
+*.vtu
+*.vts
+*.png
+*.pdf
+*.log
+*.out
+*.err
+*.resolved.json
+frames.jsonl
+
+# external checkouts
+external/
+
+# editors / OS
+.DS_Store
+.idea/
+.vscode/
+!docs/images/*.png

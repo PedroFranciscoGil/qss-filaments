@@ -1,0 +1,39 @@
+{
+ "name": "LP_QA_vacuum_tiny",
+ "equilibrium": {
+  "input_file": "inputs/input.LandremanPaul2021_QA",
+  "surf_mpol": 4,
+  "surf_ntor": 4,
+  "nfp": 2,
+  "helicity_m": 1,
+  "helicity_n": 0,
+  "seed_ellipse": 0.0,
+  "vmec_mpol": 4,
+  "ns_array": [
+   16
+  ],
+  "ftol_array": [
+   1e-11
+  ],
+  "niter_array": [
+   3000
+  ]
+ },
+ "phr": {
+  "vacuum_well": true,
+  "aspect_target": 6.0,
+  "aspect_two_sided": true,
+  "aspect_tol": 0.0,
+  "iota_mean_target": 0.4193,
+  "iota_tol": 0.002,
+  "elongation_threshold": 4.602,
+  "well_threshold": -0.0304,
+  "cs_threshold": 0.15
+ },
+ "coils": {
+  "phr_grid": [
+   32,
+   32
+  ]
+ }
+}

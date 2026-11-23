@@ -1,0 +1,76 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qss-filaments"
+version = "1.0.0"
+description = "Quasi-single-stage stellarator optimization: PHR augmented Lagrangian on VMEX equilibria with an envelope-gradient XCoil coil subproblem"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+license = {text = "MIT"}
+authors = [{name = "Pedro Francisco Gil"}, {name = "Lanke Fu"}, {name = "Alan A. Kaptanoglu"}]
+keywords = ["stellarator", "optimization", "coils", "vmec", "jax", "quasi-symmetry", "quasi-isodynamic"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Physics",
+]
+# Versions are the ones the paper runs used (H200 GPU nodes and CPU hosts):
+# jax 0.11.2, numpy 2.5.3, scipy 1.18.1, solvax 0.27.0, booz_xform_jax 0.4.3,
+# virtual-casing-jax 0.0.9, netCDF4 1.7.4, VMEX at uwplasma/VMEX@9bb7804 (vmex 0.11.2), coils with the
+# coil solver's 2026-10-01 version. Coils now: XCoil 2.0.0 (the baseline solver plus the coil force,
+# toroidal ordering and Lp-curvature constraints).
+dependencies = [
+  "numpy>=2.0,<2.6",
+  "scipy>=1.16,<1.19",
+  "jax>=0.10,<0.12",
+  "jaxlib>=0.10,<0.12",
+  "netCDF4>=1.6",
+  "h5py",
+  "matplotlib",
+  "threadpoolctl",
+  "filelock",
+  "packaging",
+  "solvax==0.27.0",
+  "booz_xform_jax==0.4.3",
+  "virtual-casing-jax==0.0.9",
+  "vmex @ git+https://github.com/uwplasma/VMEX.git@9bb780419f484690c155f4811c4664e45a1aff9e",
+  "xcoil @ git+https://github.com/PedroFranciscoGil/XCoil@4ccebdeb439f43ea542bb9d4d2e9b9459177313e",
+]
+
+[project.optional-dependencies]
+# CUDA 12 wheels for jax (Linux + NVIDIA GPU). VMEX runs on the CPU by default; XCoil benefits from a GPU.
+cuda = ["jax[cuda12]>=0.10,<0.12"]
+# simsopt: only to read coil exports into simsopt. phrport itself never imports simsopt.
+simsopt = ["simsopt"]
+# DESC: tools/desc_free_boundary.py (free-boundary verification of a coil set).
+desc = ["desc-opt"]
+# CoilPy: finite-build coil VTK export (tools/coilfb.py).
+coilpy = ["coilpy"]
+test = ["pytest>=7"]
+dev = ["pytest>=7", "ruff"]
+
+[project.scripts]
+qss-run = "phrport.cli:run_main"
+qss-coils = "phrport.cli:coils_main"
+qss-check = "phrport.cli:check_main"
+qss-seed = "phrport.seed:main"
+
+[project.urls]
+Repository = "https://github.com/PedroFranciscoGil/qss-filaments"
+
+[tool.setuptools.packages.find]
+include = ["phrport*"]
+namespaces = true
+
+[tool.setuptools.package-data]
+"*" = ["*.md", "*.txt"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+markers = [
+  "slow: runs VMEX / XCoil solves (minutes on a laptop CPU)",
+  "xcoil: needs the XCoil backend importable",
+]

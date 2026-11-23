@@ -1,0 +1,92 @@
+{
+ "name": "QI_nfp5_from_tokamak",
+ "equilibrium": {
+  "input_file": "inputs/input.tokamak_nfp5",
+  "physics": "qi",
+  "nfp": 5,
+  "surf_mpol": 8,
+  "surf_ntor": 8,
+  "seed_ellipse": 0.0,
+  "vmec_mpol": 7,
+  "ns_array": [
+   16,
+   31
+  ],
+  "ftol_array": [
+   1e-12,
+   1e-13
+  ],
+  "niter_array": [
+   3000,
+   10000
+  ],
+  "qi_surfaces": [
+   0.1,
+   0.3,
+   0.5,
+   0.7,
+   0.9
+  ],
+  "qi_options": {
+   "nphi": 101,
+   "nalpha": 21,
+   "n_bounce": 31,
+   "mboz": 16,
+   "nboz": 16,
+   "soft": 0.002,
+   "mirror_soft": 0.0002,
+   "mirror_all": true,
+   "mirror_tau": 0.002,
+   "maxj_target": -0.06,
+   "maxj_depths": [
+    0.1,
+    0.3,
+    0.5,
+    0.7,
+    0.9
+   ]
+  }
+ },
+ "phr": {
+  "aspect_target": 10.0,
+  "elongation_threshold": 6.0,
+  "iota_mean_off": true,
+  "iota_axis_target": 0.85,
+  "iota_edge_target": 0.95,
+  "iota_end_tol": 0.01,
+  "mirror_max": 0.25,
+  "vacuum_well": false,
+  "maxj": true,
+  "maxj_from_step": 3,
+  "eq_cache_size": 8
+ },
+ "coils": {
+  "n_coils": 6,
+  "order": 5,
+  "per_coil_length": 1.8,
+  "max_curvature": 12.0,
+  "max_msc": 30.0,
+  "min_cc": 0.05,
+  "min_cs": 0.08,
+  "total_current": 1330000.0,
+  "phr_grid": [
+   200,
+   64
+  ],
+  "dist_grid": [
+   320,
+   64
+  ],
+  "slot_rows": true,
+  "slot_gap_deg": 1.5,
+  "warm_max_outer": 30
+ },
+ "run": {
+  "n_continuation_steps": 6,
+  "al_outer_iter": 5,
+  "flux_metric_scale": 100,
+  "flux_target_floor": 1.3e-05,
+  "rho_max": 64,
+  "carry_trust_radius": false
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "name": "LP_QA_from_tokamak",
+ "equilibrium": {
+  "input_file": "inputs/input.tokamak_nfp2",
+  "surf_mpol": 8,
+  "surf_ntor": 8,
+  "nfp": 2,
+  "helicity_m": 1,
+  "helicity_n": 0,
+  "seed_ellipse": 0.0,
+  "vmec_mpol": 8,
+  "ns_array": [
+   16,
+   50
+  ],
+  "ftol_array": [
+   1e-16,
+   1e-13
+  ],
+  "niter_array": [
+   1200,
+   5000
+  ]
+ },
+ "phr": {
+  "vacuum_well": true,
+  "aspect_target": 6.0,
+  "aspect_two_sided": true,
+  "aspect_tol": 0.0,
+  "iota_mean_target": 0.4193,
+  "iota_tol": 0.002,
+  "elongation_threshold": 4.602,
+  "well_threshold": -0.0304,
+  "cs_threshold": 0.15
+ },
+ "coils": {
+  "n_coils": 5,
+  "order": 5,
+  "per_coil_length": 4.0,
+  "max_curvature": 3.0,
+  "max_msc": 4.0,
+  "min_cc": 0.1,
+  "min_cs": 0.15,
+  "total_current": 1250000.0
+ },
+ "run": {
+  "n_continuation_steps": 5,
+  "al_outer_iter": 5
+ }
+}
